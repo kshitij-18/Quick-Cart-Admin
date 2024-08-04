@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import UserAvatar from "@/components/UserAvatar";
 import { auth, signIn, signOut } from "@/auth";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,12 +18,16 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
 
+  if (!session?.user) {
+    redirect('/login')
+  }
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex justify-between p-7 border-b-[1px] bg-slate-200 align-middle">
+        <div className="flex justify-between px-4 py-2 shadow-md border-b-[1px] bg-slate-200 items-center">
           <h1 className="red font-bold text-3xl">Quick Cart Admin Panel</h1>
-          {session?.user ? (
+          {session?.user && (
             <form
               action={async () => {
                 "use server";
@@ -30,24 +35,10 @@ export default async function RootLayout({
               }}
               className="flex gap-4"
             >
-              <button className="bg-blue-400 hover:bg-blue-500 rounded-full text-cyan-50 font-bold py-2 px-4">
+              <button className="bg-blue-400 hover:bg-blue-500 rounded-full text-cyan-50 font-bold py-1 px-4">
                 Signout
               </button>
               <UserAvatar />
-            </form>
-          ) : (
-            <form
-              action={async () => {
-                "use server";
-                await signIn("google");
-              }}
-            >
-              <button
-                className="bg-blue-400 hover:bg-blue-500 rounded-full text-cyan-50 font-bold py-2 px-4"
-                type="submit"
-              >
-                Sign In
-              </button>
             </form>
           )}
         </div>

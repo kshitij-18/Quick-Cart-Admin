@@ -4,7 +4,7 @@ const LoginLayout = ({children}: {
     children: React.ReactNode
 }) => {
   return (
-    <div>{children}</div>
+    <div className='h-screen w-screen bg-gradient-to-l from-cyan-500 to-blue-500'>{children}</div>
   )
 }
 
