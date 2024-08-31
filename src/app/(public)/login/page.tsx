@@ -1,4 +1,5 @@
 import { auth, signIn } from '@/auth'
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
@@ -14,9 +15,11 @@ const LoginPage = async () => {
         <form action={async () => {
           "use server"
           await signIn('google');
-          redirect('/home')
         }}>
-          <button type='submit' className='rounded-sm bg-red-400 hover:bg-red-600 delay-100 shadow-md py-2 px-4 text-white'>
+          <button type='submit' className='rounded-sm bg-slate-300 hover:bg-slate-600 delay-100 shadow-md py-2 px-4 text-white flex gap-2'>
+            <span>
+              <Image src={`/Pictures/google-logo2.png`} alt="" width={25} height={25}/>
+            </span>
             Login With Google
           </button>
         </form>

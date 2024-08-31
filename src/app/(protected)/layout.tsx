@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import UserAvatar from "@/components/UserAvatar";
 import { auth, signIn, signOut } from "@/auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default async function RootLayout({
   const session = await auth();
 
   if (!session?.user) {
-    redirect('/login')
+    redirect("/login");
   }
 
   return (
@@ -42,7 +43,23 @@ export default async function RootLayout({
             </form>
           )}
         </div>
-        {children}
+        <div className="flex gap-6">
+          <div className="flex flex-col w-1/6 h-screen bg-slate-600">
+            <div className="flex gap-2 mt-1 mx-6 hover:bg-slate-500 px-3 py-3 rounded-lg cursor-pointer">
+              <Image src={'/Pictures/inventory_2_26dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png'} alt="Inventory" width={25} height={25} />
+              <div className="font-semibold text-stone-100">Products</div>
+            </div>
+            <div className="flex gap-2 mt-1 mx-6 hover:bg-slate-500 px-3 py-3 rounded-lg cursor-pointer">
+              <Image src={'/Pictures/stack_star_26dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png'} alt="Inventory" width={25} height={25} />
+              <div className="font-semibold text-stone-100">Featured Product</div>
+            </div>
+            <div className="flex gap-2 mt-1 mx-6 hover:bg-slate-500 px-3 py-3 rounded-lg cursor-pointer">
+              <Image src={'/Pictures/group_26dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png'} alt="Inventory" width={25} height={25} />
+              <div className="font-semibold text-stone-100">Users</div>
+            </div>
+          </div>
+          <div>{children}</div>
+        </div>
       </body>
     </html>
   );
